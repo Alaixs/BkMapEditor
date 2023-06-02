@@ -5,6 +5,7 @@ let blockPreview = document.getElementById('block-preview');
 let grid = [];
 let selectedTool = "BWALL";
 let isSave = true;
+let isPlacing = false;
 drawGrid();
 
 ///////////////////
@@ -45,6 +46,20 @@ function placeElement(e) {
     isSave = false;
     updateDisplay();
 }
+
+canvas.addEventListener("mousedown", () => {
+  isPlacing = true;
+});
+
+canvas.addEventListener("mouseup", () => {
+  isPlacing = false;
+});
+
+canvas.addEventListener("mousemove", (e) => {
+  if (isPlacing) {
+    placeElement(e);
+  }
+});
 
 Math.roundTo = function(num, step) {
 

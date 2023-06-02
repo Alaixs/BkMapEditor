@@ -1,10 +1,19 @@
-var canvas = document.getElementById("editor");
-var context = canvas.getContext("2d");
+let canvas = document.getElementById("editor");
+let context = canvas.getContext("2d");
 
 
 
-var grid = [];
-var selectedTool = "WALL";
+let grid = [];
+let selectedTool = "WALL";
+let isSave = true;
+
+window.addEventListener('beforeunload', function(e) {
+    if(isSave == false)
+    {
+    e.preventDefault();
+
+}
+  });
 
 
 for (let i = 0; i < 30; i++) {
@@ -25,6 +34,7 @@ function placeElement(e) {
     else if (selectedTool == "ERASE") {
         grid[Math.floor(e.offsetY / 32)][Math.floor(e.offsetX / 32)] = 0;
     }
+    isSave = false;
     updateDisplay();
 }
 
@@ -46,7 +56,6 @@ function updateDisplay() {
                 context.fillStyle = "#C07F00";
                 context.drawImage(document.querySelector("#img_bwall"), j*32, i*32, 32, 32);
             }
-
         }
     }
 
@@ -81,11 +90,10 @@ function save()
 {
     let result = "";
 
-    for (let i = 0; i < 30; i++)
-    {
-        result += grid[i];
+    for (let i = 0; i < 30; i++) {
+        result += grid[i].map(value => value || 0).join(","); // Remplace les valeurs manquantes par des zéros
         result += "\n";
-    }
+      }
 
     let mapName = document.querySelector('#filename').value;
     if (mapName == "")
@@ -94,4 +102,27 @@ function save()
     }
 
     downloadToFile(result, `${mapName}.bkmap`, 'text/plain');
+    isSave = true;
 }
+
+function readFileContent() {
+    let fileInput = document.getElementById('fileInput');
+    let file = fileInput.files[0];
+    let reader = new FileReader();
+  
+    reader.onload = function(e) {
+      let contents = e.target.result;
+        let lines = contents.split("\n");
+        for (let i = 0; i < 30; i++)
+        {
+            grid[i] = lines[i].split(",");
+        }
+        updateDisplay();
+        
+  
+      isSave = true;
+    };
+  
+    reader.readAsText(file);
+  }
+  

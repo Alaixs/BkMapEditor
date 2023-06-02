@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
     <title>BKMap Editor</title>
@@ -14,9 +17,14 @@
 
     <div id="top-bar">
         <input type="text" id="filename" placeholder="Map Name">
-        <button id="save" onclick="save()">SAVE</button>
-        <input type="file" id="fileInput" onchange="readFileContent()"><br>
-    </div>
+        <button id="save" onclick="save()">Save map</button>
+        <div class="upload-container">
+            <input type="file" id="fileInput" onchange="handleFileUpload()" />
+            <label for="fileInput" class="upload-button">
+              <span id="fileName">Choose a file</span>
+            </label>
+          </div>
+      </div>
 
     <div id="side-bar">
         <img src="t_breakable_wall.png" alt="BWall" data-tool="BWALL" class="element-selector" id="img_bwall" onclick="switchTool('BWALL')"> <br>

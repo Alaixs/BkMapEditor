@@ -129,6 +129,7 @@ const downloadToFile = (content, filename, contentType) => {
     a.click();
   
       URL.revokeObjectURL(a.href);
+
 };
 
 
@@ -155,6 +156,12 @@ function readFileContent() {
     let fileInput = document.getElementById('fileInput');
     let file = fileInput.files[0];
     let reader = new FileReader();
+    
+    if(!file.name.endsWith(".bkmap"))
+    {
+        alert("This is not a .bkmap file !");
+        return;
+    }
   
     reader.onload = function(e) {
       let contents = e.target.result;
@@ -170,6 +177,13 @@ function readFileContent() {
     };
   
     reader.readAsText(file);
+    const fileName = document.getElementById('fileName');
+
+    if (fileInput.files.length > 0) {
+      fileName.textContent = fileInput.files[0].name;
+    } else {
+      fileName.textContent = 'Choose a file';
+    }
   }
 
 

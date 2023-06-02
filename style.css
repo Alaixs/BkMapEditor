@@ -93,3 +93,17 @@ canvas {
   #fileInput:focus + .upload-button {
     outline: 2px solid #2196F3;
   }
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .grid-label {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin-left: 5px;
+  }
+  
+  

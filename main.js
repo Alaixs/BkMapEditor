@@ -159,6 +159,7 @@ function readFileContent() {
     let file = fileInput.files[0];
     let reader = new FileReader();
     
+    
     if(!file.name.endsWith(".bkmap"))
     {
         alert("This is not a .bkmap file !");

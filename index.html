@@ -13,13 +13,13 @@
 </head>
 <body>
     
-    <h1>BKMAP EDITOR V1.4</h1>
+    <h1>BKMAP EDITOR V1.5</h1>
 
     <div id="top-bar">
         <input type="text" id="filename" placeholder="Map Name">
         <button id="save" onclick="save()">Save map</button>
         <div class="upload-container">
-            <input type="file" id="fileInput" onchange="handleFileUpload()" />
+            <input type="file" id="fileInput" onchange="readFileContent()" />
             <label for="fileInput" class="upload-button">
               <span id="fileName">Choose a file</span>
             </label>
@@ -30,8 +30,10 @@
         <img src="t_breakable_wall.png" alt="BWall" data-tool="BWALL" class="element-selector" id="img_bwall" onclick="switchTool('BWALL')"> <br>
         <img src="t_unbreakable_wall.png" alt="Wall" data-tool="WALL" class="element-selector" id="img_wall" onclick="switchTool('WALL')"> <br>
         <img src="t_erase.png" alt="Erase" data-tool="ERASE" class="element-selector" onclick="switchTool('ERASE')"> <br>
-        <input type="checkbox" id="gridCheckbox" onchange="drawGrid()" checked>
-        <label for="gridCheckbox">Afficher la grille</label>
+        <div class="checkbox-container">
+            <input type="checkbox" id="gridCheckbox" onchange="drawGrid()" checked>
+            <label for="gridCheckbox" class="grid-label">Afficher la grille</label>
+          </div>
     </div>
 
     

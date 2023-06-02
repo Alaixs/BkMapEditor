@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <title>BKMap Editor</title>
+</head>
+<body>
+    
+    <h1>BKMAP EDITOR</h1>
+
+    <img src="t_breakable_wall.png" alt="" id="img_bwall">
+    <img src="t_unbreakable_wall.png" alt="" id="img_wall">
+
+    <button class="element-selector" onclick="switchTool('BWALL')">BWALL</button> <br>
+    <button class="element-selector" onclick="switchTool('WALL')">WALL</button> <br>
+    <button class="element-selector" onclick="switchTool('ERASE')">ERASE</button> <br> 
+
+    <div class="canvas-container"> 
+    <canvas id="editor" name="editor" width="950px" height="960px" onmousedown="placeElement(event)"></canvas>
+    </div>
+    
+    <script src="main.js"></script>
+
+</body>
+</html>

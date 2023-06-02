@@ -1,0 +1,27 @@
+html{
+
+    background-image: url('bkman.png');
+    background-size: cover;
+}
+
+body {
+    background-color: #686963;
+}
+
+canvas {
+    background-color: #E3F2FD;
+}
+
+h1{
+display: flex;
+justify-content: center;
+font-family: 'Nunito', sans-serif;
+font-size: 50px;
+color : #E3F2FD;
+}
+
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

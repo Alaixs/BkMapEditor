@@ -15,16 +15,16 @@
     
     <h1>BKMAP EDITOR</h1>
 
-    <img src="t_breakable_wall.png" alt="" id="img_bwall">
-    <img src="t_unbreakable_wall.png" alt="" id="img_wall">
-
-    <button class="element-selector" onclick="switchTool('BWALL')">BWALL</button> <br>
-    <button class="element-selector" onclick="switchTool('WALL')">WALL</button> <br>
-    <button class="element-selector" onclick="switchTool('ERASE')">ERASE</button> <br> 
+    <img src="t_breakable_wall.png" alt="" id="img_bwall" onclick="switchTool('BWALL')">
+    <img src="t_unbreakable_wall.png" alt="" id="img_wall" onclick="switchTool('WALL')">
+    <img src="t_erase.png" alt="" onclick="switchTool('ERASE')">
 
     <div class="canvas-container"> 
     <canvas id="editor" name="editor" width="950px" height="960px" onmousedown="placeElement(event)"></canvas>
     </div>
+
+    <input type="text" id="filename" placeholder="Map Name">
+    <button id="save" onclick="save()">SAVE</button>
     
     <script src="main.js"></script>
 

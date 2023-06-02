@@ -1,11 +1,10 @@
 var canvas = document.getElementById("editor");
 var context = canvas.getContext("2d");
 
-
-
 var grid = [];
 var selectedTool = "WALL";
 
+var draggingBalls
 
 for (let i = 0; i < 30; i++) {
     grid.push([])
@@ -31,6 +30,8 @@ function placeElement(e) {
 
 function updateDisplay() {
     context.clearRect(0, 0, 960, 960);
+
+    
     
     for (let i = 0; i < 30; i++)
     {

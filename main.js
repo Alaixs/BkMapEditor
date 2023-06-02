@@ -15,6 +15,7 @@ window.addEventListener('beforeunload', function(e) {
 }
   });
 
+var draggingBalls
 
 for (let i = 0; i < 30; i++) {
     grid.push([])
@@ -41,6 +42,8 @@ function placeElement(e) {
 
 function updateDisplay() {
     context.clearRect(0, 0, 960, 960);
+
+    
     
     for (let i = 0; i < 30; i++)
     {

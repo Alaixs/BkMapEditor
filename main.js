@@ -33,17 +33,19 @@ for (let i = 0; i < 30; i++) {
 
 
 function placeElement(e) {
-    if (selectedTool == "WALL") {
-        grid[Math.floor(e.offsetY / 32)][Math.floor(e.offsetX / 32)] = 1;
-    }
-    else if (selectedTool == "BWALL") {
-        grid[Math.floor(e.offsetY / 32)][Math.floor(e.offsetX / 32)] = 2;
-    }
-    else if (selectedTool == "ERASE") {
-        grid[Math.floor(e.offsetY / 32)][Math.floor(e.offsetX / 32)] = 0;
-    }
-    isSave = false;
-    updateDisplay();
+  if (e.buttons) {
+      if (selectedTool == "WALL") {
+          grid[Math.floor(e.offsetY / 32)][Math.floor(e.offsetX / 32)] = 1;
+      }
+      else if (selectedTool == "BWALL") {
+          grid[Math.floor(e.offsetY / 32)][Math.floor(e.offsetX / 32)] = 2;
+      }
+      else if (selectedTool == "ERASE") {
+          grid[Math.floor(e.offsetY / 32)][Math.floor(e.offsetX / 32)] = 0;
+      }
+      isSave = false;
+      updateDisplay();
+  }
 }
 
 Math.roundTo = function(num, step) {
@@ -168,13 +170,13 @@ function readFileContent() {
     canvasContainer.addEventListener('mouseenter', (e) => {
       canvasContainer.style.cursor = 'none'; 
       blockPreview.style.display = 'inline';
-      blockPreview.style.left = (-15 + e.clientX) + 'px';
-      blockPreview.style.top = (-15 + e.clientY) + 'px';
+      blockPreview.style.left = (-15 + e.pageX) + 'px';
+      blockPreview.style.top = (-15 + e.pageY) + 'px';
     });
   
     canvasContainer.addEventListener('mousemove', (e) => {
-      blockPreview.style.left = (-15 + e.clientX) + 'px';
-      blockPreview.style.top = (-15 + e.clientY) + 'px';
+      blockPreview.style.left = (-15 + e.pageX) + 'px';
+      blockPreview.style.top = (-15 + e.pageY) + 'px';
     });
   
     canvasContainer.addEventListener('mouseleave', () => {

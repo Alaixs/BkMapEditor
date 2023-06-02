@@ -1,10 +1,11 @@
 const canvas = document.getElementById("editor");
 const context = canvas.getContext("2d");
-const blockPreview = document.getElementById('block-preview');
 const gridCheckbox = document.getElementById("gridCheckbox");
+let blockPreview = document.getElementById('block-preview');
 let grid = [];
 let selectedTool = "BWALL";
 let isSave = true;
+drawGrid();
 
 ///////////////////
 //  SAVE CHECKER //
@@ -87,10 +88,10 @@ function switchTool(tool) {
   
 
     selectedTool = tool;
-    drawGrid();
 
     blockPreview = document.getElementById('block-preview');
     if (tool === "WALL") {
+        console.log("WALL");
       blockPreview.src = "t_32unbreakable_wall.png";
     } else if (tool === "BWALL") {
       blockPreview.src = "t_32breakable_wall.png";

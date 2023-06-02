@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 html{
-
-    background-image: url('bkman.png');
-    background-size: cover;
     background-color: #4c7c78;
 }
 
@@ -16,6 +13,13 @@ h1{
     font-family: 'Press Start 2P', cursive;
     font-size: 50px;
     color : #F7E7BE;
+}
+
+canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
 
 #top-bar {
@@ -32,3 +36,14 @@ h1{
     left: 0;
     margin: 0 8px;
 }
+
+#block-preview {
+    position: absolute;
+    display: none;
+    pointer-events: none; /* Ignorer les événements de la souris */
+  }
+  
+
+.selected-tool {
+    border: 5px solid white;
+  }

@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
     <title>BKMap Editor</title>
 </head>
 <body>
     
-    <h1>BKMAP EDITOR</h1>
+    <h1>BKMAP EDITOR V1.2</h1>
+
 
     <div id="top-bar">
         <input type="text" id="filename" placeholder="Map Name">
         <button id="save" onclick="save()">SAVE</button>
+        <input type="file" id="fileInput" onchange="readFileContent()"><br>
     </div>
 
     <div id="side-bar">
-        <img src="t_breakable_wall.png" alt="" id="img_bwall" onclick="switchTool('BWALL')"> <br>
-        <img src="t_unbreakable_wall.png" alt="" id="img_wall" onclick="switchTool('WALL')"> <br>
-        <img src="t_erase.png" alt="" onclick="switchTool('ERASE')"> <br>
+        <img src="t_breakable_wall.png" alt="BWall" data-tool="BWALL" class="element-selector" id="img_bwall" onclick="switchTool('BWALL')"> <br>
+        <img src="t_unbreakable_wall.png" alt="Wall" data-tool="WALL" class="element-selector" id="img_wall" onclick="switchTool('WALL')"> <br>
+        <img src="t_erase.png" alt="Erase" data-tool="ERASE" class="element-selector" onclick="switchTool('ERASE')"> <br>
+        <input type="checkbox" id="gridCheckbox" onchange="drawGrid()">
+        <label for="gridCheckbox">Afficher la grille</label>
     </div>
 
     
@@ -32,9 +33,7 @@
     <canvas id="editor" name="editor" width="960px" height="960px" onmousedown="placeElement(event)"></canvas>
     </div>
 
-    <input type="text" id="filename" placeholder="Map Name">
-    <button id="save" onclick="save()">SAVE</button>
-    <input type="file" id="fileInput" onchange="readFileContent()"><br>
+    <img id="block-preview" alt="" src="t_32breakable_wall.png"position: absolute; display: none;">
     
     <script src="main.js"></script>
 

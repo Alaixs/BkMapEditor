@@ -1,21 +1,27 @@
-let canvas = document.getElementById("editor");
-let context = canvas.getContext("2d");
-
-
-
+const canvas = document.getElementById("editor");
+const context = canvas.getContext("2d");
+const blockPreview = document.getElementById('block-preview');
+const gridCheckbox = document.getElementById("gridCheckbox");
 let grid = [];
-let selectedTool = "WALL";
+let selectedTool = "BWALL";
 let isSave = true;
+
+///////////////////
+//  SAVE CHECKER //
+///////////////////
 
 window.addEventListener('beforeunload', function(e) {
     if(isSave == false)
     {
     e.preventDefault();
 
-}
-  });
+    }
+});
 
-var draggingBalls
+
+/////////////////////
+//  PLACE & UPDATE //
+/////////////////////
 
 for (let i = 0; i < 30; i++) {
     grid.push([])
@@ -39,12 +45,14 @@ function placeElement(e) {
     updateDisplay();
 }
 
+Math.roundTo = function(num, step) {
+
+    return Math.floor((num / step) + .5) * step;
+}
+
 
 function updateDisplay() {
     context.clearRect(0, 0, 960, 960);
-
-    
-    
     for (let i = 0; i < 30; i++)
     {
         for (let j = 0; j < 30; j++)
@@ -61,21 +69,40 @@ function updateDisplay() {
             }
         }
     }
-
+    if(gridCheckbox.checked)
+    {
+        drawGrid();
+    }
 }
 
 
-function switchTool(tool)
-{
+function switchTool(tool) {
+    const images = document.querySelectorAll(".element-selector");
+    images.forEach((image) => {
+      image.classList.remove("selected-tool");
+    });
+  
+    const selectedImage = document.querySelector(`.element-selector[data-tool="${tool}"]`);
+    selectedImage.classList.add("selected-tool");
+  
+
     selectedTool = tool;
-}
+    drawGrid();
 
+    blockPreview = document.getElementById('block-preview');
+    if (tool === "WALL") {
+      blockPreview.src = "t_32unbreakable_wall.png";
+    } else if (tool === "BWALL") {
+      blockPreview.src = "t_32breakable_wall.png";
+    } else if (tool === "ERASE") {
+      blockPreview.src = "t_32erase.png";
+    }
+  }
+  
 
-Math.roundTo = function(num, step) {
-
-    return Math.floor((num / step) + .5) * step;
-    
-}
+  ///////////////////////
+  //  DOWNLOAD & SAVE  //
+  ///////////////////////
 
 const downloadToFile = (content, filename, contentType) => {
     const a = document.createElement('a');
@@ -94,7 +121,7 @@ function save()
     let result = "";
 
     for (let i = 0; i < 30; i++) {
-        result += grid[i].map(value => value || 0).join(","); // Remplace les valeurs manquantes par des zéros
+        result += grid[i].map(value => value || 0).join(",");
         result += "\n";
       }
 
@@ -128,4 +155,57 @@ function readFileContent() {
   
     reader.readAsText(file);
   }
+
+
+  ///////////////////////
+  //   MOUSE PREVIEW   //
+  ///////////////////////
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvasContainer = document.getElementById('editor');
   
+    canvasContainer.addEventListener('mouseenter', (e) => {
+      canvasContainer.style.cursor = 'none'; 
+      blockPreview.style.display = 'inline';
+      blockPreview.style.left = (-15 + e.clientX) + 'px';
+      blockPreview.style.top = (-15 + e.clientY) + 'px';
+    });
+  
+    canvasContainer.addEventListener('mousemove', (e) => {
+      blockPreview.style.left = (-15 + e.clientX) + 'px';
+      blockPreview.style.top = (-15 + e.clientY) + 'px';
+    });
+  
+    canvasContainer.addEventListener('mouseleave', () => {
+      blockPreview.style.display = 'none';
+    });
+  });
+
+
+  function drawGrid() {
+    if(!gridCheckbox.checked)
+    {
+        updateDisplay();
+        return;
+    }
+    const gridSize = 32;
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+  
+    context.strokeStyle = "#888";
+    context.lineWidth = 1;
+  
+    for (let x = 0; x <= canvasWidth; x += gridSize) {
+      context.beginPath();
+      context.moveTo(x, 0);
+      context.lineTo(x, canvasHeight);
+      context.stroke();
+    }
+  
+    for (let y = 0; y <= canvasHeight; y += gridSize) {
+      context.beginPath();
+      context.moveTo(0, y);
+      context.lineTo(canvasWidth, y);
+      context.stroke();
+    }
+  }

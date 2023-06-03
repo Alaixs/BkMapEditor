@@ -6,6 +6,7 @@ let grid = [];
 let selectedTool = "BWALL";
 let isSave = true;
 let isPlacing = false;
+let gridSize = 20;
 drawGrid();
 
 ///////////////////
@@ -25,9 +26,9 @@ window.addEventListener('beforeunload', function(e) {
 //  PLACE & UPDATE //
 /////////////////////
 
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < gridSize; i++) {
     grid.push([])
-    for (let j = 0; j < 30; j++) {
+    for (let j = 0; j < gridSize; j++) {
         grid[i].push(0);
     }
 }
@@ -71,9 +72,9 @@ Math.roundTo = function(num, step) {
 
 function updateDisplay() {
     context.clearRect(0, 0, 960, 960);
-    for (let i = 0; i < 30; i++)
+    for (let i = 0; i < gridSize; i++)
     {
-        for (let j = 0; j < 30; j++)
+        for (let j = 0; j < gridSize; j++)
         {
             if (grid[i][j] == 1)
             {
@@ -135,49 +136,46 @@ const downloadToFile = (content, filename, contentType) => {
 };
 
 
-function save()
-{
-    let result = "";
+function save() {
+  let result = "";
 
-    for (let i = 0; i < 30; i++) {
-        result += grid[i].map(value => value || 0).join(",");
-        result += "\n";
-      }
+  for (let i = 0; i < gridSize; i++) {
+      result += grid[i].map(value => value || 0).join("");
+      result += ";";
+      result += "\n";
+  }
 
-    let mapName = document.querySelector('#filename').value;
-    if (mapName == "")
-    {
-        mapName = "my_map";
-    }
+  let mapName = document.querySelector('#filename').value;
+  if (mapName == "") {
+      mapName = "my_map";
+  }
 
-    downloadToFile(result, `${mapName}.bkmap`, 'text/plain');
-    isSave = true;
+  downloadToFile(result, `${mapName}.bkmap`, 'text/plain');
+  isSave = true;
 }
 
 function readFileContent() {
-    let fileInput = document.getElementById('fileInput');
-    let file = fileInput.files[0];
-    let reader = new FileReader();
-    
-    
-    if(!file.name.endsWith(".bkmap"))
-    {
-        alert("This is not a .bkmap file !");
-        return;
-    }
-  
-    reader.onload = function(e) {
+  let fileInput = document.getElementById('fileInput');
+  let file = fileInput.files[0];
+  let reader = new FileReader();
+
+
+  if (!file.name.endsWith(".bkmap")) {
+      alert("This is not a .bkmap file !");
+      return;
+  }
+
+  reader.onload = function (e) {
       let contents = e.target.result;
-        let lines = contents.split("\n");
-        for (let i = 0; i < 30; i++)
-        {
-            grid[i] = lines[i].split(",");
-        }
-        updateDisplay();
-        
-  
+      let lines = contents.split("\n");
+      for (let i = 0; i < gridSize; i++) {
+          grid[i] = lines[i].replace(/;/g, ",").split(",");
+      }
+      updateDisplay();
+
+
       isSave = true;
-    };
+  };
   
     reader.readAsText(file);
     const fileName = document.getElementById('fileName');

@@ -13,7 +13,7 @@
 </head>
 <body>
     
-    <h1>BKMAP EDITOR V1.5</h1>
+    <h1>BKMAP EDITOR V1.6</h1>
 
     <div id="top-bar">
         <input type="text" id="filename" placeholder="Map Name">
@@ -34,12 +34,13 @@
             <input type="checkbox" id="gridCheckbox" onchange="drawGrid()" checked>
             <label for="gridCheckbox" class="grid-label">Afficher la grille</label>
           </div>
+        <button id="add_border" onclick="addBorder()">Ajouter bordure</button>
     </div>
 
     
 
     <div class="canvas-container"> 
-    <canvas id="editor" name="editor" width="960px" height="960px" onmousemove="placeElement(event)" onmousedown="placeElement(event)"></canvas>
+    <canvas id="editor" name="editor" width="640px" height="640px" onmousemove="placeElement(event)" onmousedown="placeElement(event)"></canvas>
     </div>
 
 

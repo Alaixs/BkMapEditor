@@ -14,7 +14,7 @@ drawGrid();
 ///////////////////
 
 window.addEventListener('beforeunload', function(e) {
-    if(isSave == false)
+    if(!isSave)
     {
     e.preventDefault();
 
@@ -71,7 +71,8 @@ Math.roundTo = function(num, step) {
 
 
 function updateDisplay() {
-    context.clearRect(0, 0, 960, 960);
+    context.clearRect(0, 0, 640, 640);
+
     for (let i = 0; i < gridSize; i++)
     {
         for (let j = 0; j < gridSize; j++)
@@ -92,6 +93,7 @@ function updateDisplay() {
     {
         drawGrid();
     }
+    isSave = false;
 }
 
 
@@ -109,7 +111,6 @@ function switchTool(tool) {
 
     blockPreview = document.getElementById('block-preview');
     if (tool === "WALL") {
-        console.log("WALL");
       blockPreview.src = "t_32unbreakable_wall.png";
     } else if (tool === "BWALL") {
       blockPreview.src = "t_32breakable_wall.png";
@@ -166,15 +167,19 @@ function readFileContent() {
   }
 
   reader.onload = function (e) {
-      let contents = e.target.result;
-      let lines = contents.split("\n");
-      for (let i = 0; i < gridSize; i++) {
-          grid[i] = lines[i].replace(/;/g, ",").split(",");
+    let contents = e.target.result;
+    let lines = contents.split("\n");
+    
+    for (let i = 0; i < gridSize; i++) {
+      let line = lines[i].trim(); // Supprimer les espaces en début et fin de ligne si nécessaire
+      let digits = line.split(""); // Diviser la ligne en caractères individuels
+        
+      for (let j = 0; j < gridSize; j++) {
+        let digit = parseInt(digits[j]); // Convertir chaque caractère en nombre entier
+        grid[i][j] = digit;
       }
-      updateDisplay();
-
-
-      isSave = true;
+    }
+    updateDisplay();
   };
   
     reader.readAsText(file);
@@ -240,3 +245,33 @@ function readFileContent() {
       context.stroke();
     }
   }
+
+  function addBorder()
+  {
+    for (let i = 0; i < gridSize; i++) {
+        grid[i][0] = 1;
+        grid[i][gridSize-1] = 1;
+        grid[0][i] = 1;
+        grid[gridSize-1][i] = 1;
+    }
+    updateDisplay();
+  }
+
+
+  function handleKeyDown(event) {
+    if (event.key === "1")
+    {
+      switchTool("BWALL");
+    }
+    else if (event.key === "2")
+    {
+      switchTool("WALL");
+    }
+    else if (event.key === "3")
+    {
+      switchTool("ERASE");
+    }
+}
+
+
+document.addEventListener("keydown", handleKeyDown);
